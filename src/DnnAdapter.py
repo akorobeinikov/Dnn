@@ -2,13 +2,13 @@ import cv2
 import numpy
 
 class DnnAdapter:
-    def __init__(self, weightsPath=None, configPath=None,
-                 task_type=None):
-        self.weights = weightsPath
-        self.config = configPath
-        self.task_type = task_type
-        # Create net
+    def __init__(self, args):
+        self.weights = args["weights"]
+        self.config = args["config"]
+        self.task_type = args["type"]
         self.net = cv2.dnn.readNet(self.weights, self.config)
+
+        self.width, self.height = args["input"].values()
 
     def processImage(self, image):
         # Read image
@@ -17,16 +17,55 @@ class DnnAdapter:
         else:
             img = image
         # forward
-        if self.task_type == 'face_detection' or self.task_type == 'face_GUI':
-            blob = cv2.dnn.blobFromImage(cv2.resize(img, (300, 300)), 1.0, (300, 300), (128, 128, 128))
+        if self.task_type == 'road_segmentation':
+            blob = cv2.dnn.blobFromImage(img, 1.0, (self.width, self.height))
             self.net.setInput(blob)
             result = self.net.forward()
-            self._output_face_detection(result, img)
+            self._output_segmentation(result, img)
+        if self.task_type == 'semantic_segmentation':
+            blob = cv2.dnn.blobFromImage(img, 1.0, (self.width, self.height))
+            self.net.setInput(blob)
+            result = self.net.forward()
+            self._output_segmentation(result, img)
+        if self.task_type == 'face_detection' or self.task_type == 'face_GUI':
+            blob = cv2.dnn.blobFromImage(cv2.resize(img, (self.width, self.height)), 1.0, (self.width, self.height))
+            self.net.setInput(blob)
+            result = self.net.forward()
+            if self.task_type == 'face_detection':
+                self._output_face_detection(result, img)
+            else:
+                return result
         if self.task_type == 'classification':
-            blob = cv2.dnn.blobFromImage(img, 1, (224, 224), (128, 128, 128))
+            blob = cv2.dnn.blobFromImage(cv2.resize(img, (self.width, self.height)), 1, (self.width, self.height))
             self.net.setInput(blob)
             result = self.net.forward()
             self._outputClassification(result)
+
+    def _output_segmentation(self, result, img):
+        if self.task_type == 'road_segmentation':
+            image = cv2.resize(img, (self.width, self.height))
+            cv2.imshow("Output", image)
+            flag = 0
+            colors = [(0, 255, 0), (0, 0, 255), (255, 0, 0), (0, 0, 0)]  # BGR of BG, road, crub, mark
+            for i in range(self.height):
+                for j in range(self.width):
+                    lst = [x[i][j] for x in result[0]]
+                    index = lst.index(max(lst))
+                    image[i][j] = colors[index]
+            cv2.imshow("Result", image)
+            cv2.waitKey(0)
+        else:
+            image = cv2.resize(img, (self.width, self.height))
+            cv2.imshow("Output1", image)
+            colors = result[0][0]
+            lst = [(89, 66, 0), (0, 3, 153), (0, 0, 255), (99, 126, 255), (218, 153, 255), (0, 0, 0), (166, 0, 218), (255, 141, 255), (0, 255, 0), (0, 149, 196),
+                   (255, 255, 0), (0, 230, 230), (188, 255, 255), (255, 5, 184), (255, 99, 71), (0, 102, 255), (0, 90, 198), (0, 2, 79), (152, 205, 0), (255, 205, 255)]
+            for i in range(0, self.height):
+                for j in range(0, self.width):
+                    image[i][j] = lst[int(colors[i][j])]
+            print(result[0][0].shape)
+            cv2.imshow("Output", image)
+            cv2.waitKey(0)
 
 
     def _outputClassification(self, output):
@@ -42,7 +81,7 @@ class DnnAdapter:
 
     def _output_face_detection(self, output, img):
         (h, w) = img.shape[:2]
-        print(output)
+        # print(output)
         for i in range(0, output.shape[2]):
             confidence = output[0, 0, i, 2]
             if confidence > 0.5:

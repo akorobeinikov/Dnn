@@ -1,0 +1,10 @@
+{
+    "type" : "face_detection",
+    "weights" : "C:/images/face.caffemodel",
+    "config" : "C:/images/face.prototxt",
+    "image" : "C:/images/woman.jpg",
+    "input": {
+        "width" : 300,
+        "height" : 300
+    }
+}
