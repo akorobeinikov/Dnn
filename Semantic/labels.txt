@@ -13,7 +13,7 @@ person - желтый
 rider розовый
 car - темно-зеленый
 truck - томатный
-bus
+bus - слабо синий
 train
 motorcycle
 bicycle
