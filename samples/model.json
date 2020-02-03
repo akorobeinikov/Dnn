@@ -1,10 +1,8 @@
 {
-    "type" : "face_detection",
-    "weights" : "C:/images/face.caffemodel",
-    "config" : "C:/images/face.prototxt",
-    "image" : "C:/images/woman.jpg",
-    "input": {
-        "width" : 300,
-        "height" : 300
-    }
+  "type": "road_segmentation",
+  "image": "C:/images/road_seg.jpg",
+  "input": {
+    "width": 227,
+    "height": 227
+  }
 }
