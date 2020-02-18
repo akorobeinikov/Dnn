@@ -1,0 +1,8 @@
+{
+  "type": "road_segmentation",
+  "image": "C:/images/road_seg.jpg",
+  "input": {
+    "width": 227,
+    "height": 227
+  }
+}
