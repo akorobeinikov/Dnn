@@ -22,5 +22,8 @@
  * https://neurohive.io/ru/tutorial/simple-gan-python-keras/ - инструкция по обучению сети GAN
  
  Наглядные примеры работы генератора:
+ 
  после 1 эпохи: ![](https://github.com/alexmasterdi/Dnn/blob/GAN/GAN/GAN_images_finally/gan_generated_image%201.png)
+ после 20 эпохи: ![](https://github.com/alexmasterdi/Dnn/blob/GAN/GAN/GAN_images_finally/gan_generated_image%2020.png)
+ после 100 эпохи: ![](https://github.com/alexmasterdi/Dnn/blob/GAN/GAN/GAN_images_finally/gan_generated_image%20100.png)
 
