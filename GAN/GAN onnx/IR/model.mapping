@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<mapping>
+	<map>
+		<framework name="leaky_re_lu_7/LeakyRelu:0" out_port_id="leaky_re_lu_7/LeakyRelu:0"/>
+		<IR id="2" name="leaky_re_lu_7" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="biased_tensor_name" out_port_id="biased_tensor_name"/>
+		<IR id="7" name="dense_12" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="biased_tensor_name3" out_port_id="biased_tensor_name3"/>
+		<IR id="1" name="dense_9" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="biased_tensor_name1" out_port_id="biased_tensor_name1"/>
+		<IR id="5" name="dense_11" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="biased_tensor_name2" out_port_id="biased_tensor_name2"/>
+		<IR id="3" name="dense_10" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="Identity5" out_port_id="0"/>
+		<IR id="8" name="Tanh" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="dense_12/Tanh:01" out_port_id="dense_12/Tanh:01"/>
+		<IR id="8" name="Tanh" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="leaky_re_lu_8/LeakyRelu:0" out_port_id="leaky_re_lu_8/LeakyRelu:0"/>
+		<IR id="4" name="leaky_re_lu_8" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="dense_9_input" out_port_id="dense_9_input"/>
+		<IR id="0" name="dense_9_input" out_port_id="0"/>
+	</map>
+	<map>
+		<framework name="leaky_re_lu_9/LeakyRelu:0" out_port_id="leaky_re_lu_9/LeakyRelu:0"/>
+		<IR id="6" name="leaky_re_lu_9" out_port_id="1"/>
+	</map>
+</mapping>
